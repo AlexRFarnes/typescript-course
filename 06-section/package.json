@@ -2,9 +2,9 @@
   "name": "04-section",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/interfaces.js",
+  "main": "dist/index.js",
   "scripts": {
-    "start": "tsc-watch --onSuccess \"node dist/interfaces.js\""
+    "start": "tsc-watch --onSuccess \"node dist/index.js\""
   },
   "keywords": [],
   "author": "",
