@@ -16,23 +16,23 @@ const dbSource: DBSource = {
 // Discriminated union type because the type property is used to discriminate the type (both types have the same property type but different values)
 type Source = FileSource | DBSource;
 
+function isFileSource(source: Source): source is FileSource {
+  return source.type === "file";
+}
+
 // Non-discriminated union type
 function loadData(source: Source) {
   // Open + read file OR reach out to database server
   // Using type guards to check the type of the source
-  if ("path" in source) {
+  if (isFileSource(source)) {
     // source is a FileSource
     console.log("Loading file data from", source.path);
     return;
   }
 
-  if ("connectionUrl" in source) {
-    // source is a DBSource
-    console.log("Loading database data from", source.connectionUrl);
-    return;
-  }
-
-  throw new Error("Invalid source type");
+  // source is a DBSource
+  console.log("Loading database data from", source.connectionUrl);
+  return;
 }
 
 // Discriminated union type with the type property
@@ -58,7 +58,7 @@ class User {
   constructor(public name: string) {}
 
   join() {
-    // ...
+    console.log(`${this.name} joined the system`);
   }
 }
 
@@ -66,6 +66,25 @@ class Admin {
   constructor(public permissions: string[]) {}
 
   scan() {
-    // ...
+    console.log(`${this.permissions.join(", ")} permissions granted`);
   }
 }
+
+const user = new User("John");
+const admin = new Admin(["read", "write"]);
+
+type Entity = User | Admin;
+
+// Using instance of to check the type of the object
+function init(entity: Entity) {
+  if (entity instanceof User) {
+    entity.join();
+  }
+
+  if (entity instanceof Admin) {
+    entity.scan();
+  }
+}
+
+init(user);
+init(admin);
