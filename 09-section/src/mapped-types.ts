@@ -14,7 +14,7 @@ let operations: Operations = {
 
 // ************* Mapped Types *************
 type Results<T> = {
-  [K in keyof T]?: number; // can add the readonly modifier to the mapped type
+  [K in keyof T]?: number; // can add the readonly modifier to the mapped type or the optional modifier ?
 };
 
 // -? -> remove the optional modifier
