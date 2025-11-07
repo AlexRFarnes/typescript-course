@@ -1,11 +1,15 @@
 // ************* Decorators *************
 
+// Decorators are a way to add metadata to a class, property, method, or parameter.
+// Decorators run when the class is defined, not when the class is instantiated.
+
 function Logger(constructor: Function) {
   console.log("Logging...");
   console.log(constructor);
 }
 
 // ************* Decorator Factory *************
+// Class Decorator
 function LoggerFactory(logString: string) {
   console.log("Logger Factory...");
   return function (constructor: Function) {
@@ -14,16 +18,36 @@ function LoggerFactory(logString: string) {
   };
 }
 
+// Class Decorator
+// function WithTemplate(template: string, hookId: string) {
+//   console.log("Rendering Factory...");
+//   return function (constructor: any) {
+//     console.log("Rendering template...");
+//     const hookEl = document.getElementById(hookId);
+//     const p = new constructor();
+//     if (hookEl) {
+//       hookEl.innerHTML = template;
+//       hookEl.querySelector("h1")!.textContent = p.name;
+//     }
+//   };
+// }
+
 function WithTemplate(template: string, hookId: string) {
-  console.log("Rendering Factory...");
-  return function (constructor: any) {
-    console.log("Rendering template...");
-    const hookEl = document.getElementById(hookId);
-    const p = new constructor();
-    if (hookEl) {
-      hookEl.innerHTML = template;
-      hookEl.querySelector("h1")!.textContent = p.name;
-    }
+  console.log("TEMPLATE FACTORY...");
+  return function <T extends { new (...args: any[]): { name: string } }>(
+    originalConstructor: T
+  ) {
+    return class extends originalConstructor {
+      constructor(...args: any[]) {
+        super(...args);
+        console.log("Rendering template...");
+        const hookEl = document.getElementById(hookId);
+        if (hookEl) {
+          hookEl.innerHTML = template;
+          hookEl.querySelector("h1")!.textContent = this.name;
+        }
+      }
+    };
   };
 }
 
@@ -93,3 +117,31 @@ class Product {
     return this.price * (1 + tax);
   }
 }
+
+// ************* Method Decorator *************
+// Overriding the original descriptor to return a new descriptor with the bound function
+function AutoBind(_: any, __: string | Symbol, descriptor: PropertyDescriptor) {
+  const originalMethod = descriptor.value;
+  const adjDescriptor: PropertyDescriptor = {
+    configurable: true,
+    enumerable: false,
+    get() {
+      const boundFn = originalMethod.bind(this); // this will always refer to the instance of the class
+      return boundFn;
+    },
+  };
+  return adjDescriptor;
+}
+
+class Printer {
+  message = "This works!";
+
+  @AutoBind
+  showMessage() {
+    console.log(this.message);
+  }
+}
+
+const p = new Printer();
+const button = document.querySelector("button")!;
+button.addEventListener("click", p.showMessage);
