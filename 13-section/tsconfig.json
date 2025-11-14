@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "amd",
+    "moduleResolution": "node",
+    "lib": ["DOM", "ES2022", "DOM.iterable", "ScriptHost"],
+    "sourceMap": true,
+    "outFile": "./dist/bundle.js",
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "removeComments": true,
+    "noEmitOnError": true,
+    "strict": true,
+
+    "noImplicitReturns": true,
+    "esModuleInterop": true,
+
+    "experimentalDecorators": true
+  },
+  "exclude": ["node_modules", "dist"]
+}
