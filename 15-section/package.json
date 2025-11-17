@@ -1,0 +1,23 @@
+{
+  "name": "15-section",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/app.js",
+  "scripts": {
+    "build": "tsc && node dist/app.js",
+    "watch": "tsc-watch --onSuccess \"node dist/app.js\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/lodash": "^4.17.20",
+    "@types/node": "^24.9.1",
+    "tsc-watch": "^7.2.0",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21",
+    "zod": "^4.1.12"
+  }
+}
