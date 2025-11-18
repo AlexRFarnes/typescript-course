@@ -3,6 +3,7 @@ import { type Goal } from "./components/CourseGoals.tsx";
 import Header from "./components/Header.tsx";
 import image from "./assets/goals.jpg";
 import CourseGoals from "./components/CourseGoals.tsx";
+import NewGoal from "./components/NewGoal.tsx";
 
 function App() {
   const [goals, setGoals] = useState<Goal[]>([
@@ -27,12 +28,20 @@ function App() {
     setGoals(prevGoals => prevGoals.filter(goal => goal.id !== id));
   };
 
+  const handleAddGoal = (goal: string, description: string) => {
+    setGoals(prevGoals => [
+      ...prevGoals,
+      { id: prevGoals.length + 1, title: goal, description: description },
+    ]);
+  };
+
   return (
     <main>
       <Header image={{ src: image, alt: "A list of goals" }}>
         <h1>Your Learning Goals</h1>
       </Header>
       <CourseGoals goals={goals} onDelete={handleDeleteGoal} />
+      <NewGoal onAddGoal={handleAddGoal} />
     </main>
   );
 }
