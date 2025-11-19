@@ -1,10 +1,14 @@
-import express, { type Request, type Response } from "express";
+import express, { NextFunction, type Request, type Response } from "express";
+import todoRoutes from "./routes/todo.js";
 
 const app = express();
 
-app.get("/", (req: Request, res: Response) => {
-  console.log(req.method);
-  res.json({ message: "Hello, World!" });
+app.use(express.json());
+
+app.use(todoRoutes);
+
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+  res.status(500).json({ message: "An unexpected error occurred" });
 });
 
 app.listen(3000, () => {

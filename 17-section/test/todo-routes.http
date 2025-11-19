@@ -1,0 +1,45 @@
+GET http://localhost:3000/todos
+
+###
+
+GET http://localhost:3000/todos/0.21549823545917035
+
+###
+POST http://localhost:3000/todos
+Content-Type: application/json
+
+{
+    "text": "Study TypeScript"
+}
+
+###
+
+POST http://localhost:3000/todos
+Content-Type: application/json
+
+{
+    "text": "Study FastAPI"
+}
+
+###
+
+POST http://localhost:3000/todos
+Content-Type: application/json
+
+{
+    "text": "Study Node.js"
+}
+
+
+### 
+
+PATCH http://localhost:3000/todos/0.21549823545917035
+Content-Type: application/json
+
+{
+    "text": "Study JavaScript"
+}
+
+###
+
+DELETE http://localhost:3000/todos/0.21549823545917035  
